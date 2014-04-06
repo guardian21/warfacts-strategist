@@ -92,7 +92,14 @@ class FleetsController extends BaseController {
 		$id = Input::get('fleet');
 		$fleet = Fleet::findOrFail($id);
 		$fleet->delete();
-		return Redirect::action('FleetsController@show');
 
+
+		return Redirect::action('FleetsController@show');
+<<<<<<< HEAD
+ 
+>>>>>>> 7239fc9e4c1eda1d4019e66f068881383fa7a0bd
+=======
+
+>>>>>>> 9696021a314da30ba4324d4bc9fefdcfdee46774
 	}
 }
