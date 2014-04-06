@@ -20,7 +20,7 @@ class CreateFleets extends Migration {
 			$table->string('empire');
 			$table->string('faction');
 			$table->integer('ships');
-			$table->float('tonnage');
+			$table->double('tonnage',13,1);
 			$table->integer('warfacts_id')->nullable();
 			$table->integer('x');
 			$table->integer('y');
