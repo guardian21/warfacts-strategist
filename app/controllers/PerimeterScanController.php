@@ -18,7 +18,7 @@ class PerimeterScanController extends BaseController {
 		$html = HtmlDomParser::str_get_html("$htmlPage");
 
 		if ($html == null){
-			return Response::make("Failed to parse scan 01. Input = " + $htmlPage);
+			return Response::make("Failed to parse scan 01. Input = ");
 		}
 
 		$table = $html->find('*[id=perimTable]',0);
