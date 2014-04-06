@@ -87,12 +87,10 @@ class FleetsController extends BaseController {
 		return View::make('fleet_delete', compact('fleet'));
 	}
 
-	public function handleDelete() {
+	public function handleDelete(Fleet $fleet) {
 		// Handle the delete confirmation
 		$id = Input::get('fleet');
 		$fleet = Fleet::findOrFail($id);
 		$fleet->delete();
-		return Redirect::action('FleetsController@show');
-
 	}
 }

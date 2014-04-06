@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'Warring-Factions', //Put Your database name here, Warring-Factions is example
-			'username'  => 'user',             //Put database username here
-			'password'  => 'password',         //Put database user password here
+			'database'  => 'Warring-Factions',
+			'username'  => 'root',
+			'password'  => 'rootguardian21',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -87,7 +87,7 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 
 	Route::post('/add', 'FleetsController@handleAdd');
 	Route::post('/update', 'FleetsController@handleUpdate');
-	Route::post('/delete/', 'FleetsController@handleDelete');
+	Route::post('/delete', 'FleetsController@handleDelete');
 
 });
 //After here all are Test to be removed
