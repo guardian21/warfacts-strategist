@@ -1,6 +1,6 @@
 <?php
 
-class FleetsController extends BaseController {
+class FleetsController extends BaseController { 
 	public function show()	{
 		$fleets = Fleet::all();
 		return View::make('fleet_show', compact('fleets'));
