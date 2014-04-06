@@ -17,6 +17,8 @@ class PerimeterScanController extends BaseController {
 
 		$html = HtmlDomParser::str_get_html("$htmlPage");
 
+		return Response::make($htmlPage);
+
 		if ($html == null){
 			return Response::make("Failed to parse scan 01. Input = ");
 		}
