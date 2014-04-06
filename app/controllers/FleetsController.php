@@ -36,7 +36,7 @@ class FleetsController extends BaseController {
 		$fleet->battlelogs = Input::get('battlelogs', null);
 		$fleet->notes = Input::get('notes', null);
 
-		//$fleet->save();
+		$fleet->save();
 
 		return Redirect::action('FleetsController@show');
 
