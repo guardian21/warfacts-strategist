@@ -93,6 +93,6 @@ class FleetsController extends BaseController {
 		$fleet = Fleet::findOrFail($id);
 		$fleet->delete();
 		return Redirect::action('FleetsController@show');
- 
+
 	}
 }
