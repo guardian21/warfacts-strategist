@@ -37,9 +37,8 @@ class FleetsController extends BaseController {
 		$fleet->notes = Input::get('notes', null);
 
 		$fleet->save();
-
-		return Response::make("Post run, added?");
-		//return Redirect::action('FleetsController@show');
+		
+		return Redirect::action('FleetsController@show');
 
 	}
 
