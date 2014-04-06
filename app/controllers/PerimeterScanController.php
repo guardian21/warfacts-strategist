@@ -11,7 +11,7 @@ class PerimeterScanController extends BaseController {
 
 	public function parsePerimeterScanHtml() {
 
-		$htmlPage = Input::get('perimeterScanHtmlPage');
+		$htmlPage = urldecode(Input::get('perimeterScanHtmlPage'));
 
 		//Parse the input
 
