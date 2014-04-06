@@ -36,6 +36,14 @@
 			@endif
 		</select>
 		<div class="form-group">
+			<label for="empire">Empire</label>
+			<input type="text" class="form-control" name="empire" value="{{$fleet->empire }}"/>
+		</div>		
+		<div class="form-group">
+			<label for="faction">Faction</label>
+			<input type="text" class="form-control" name="faction" value="{{$fleet->faction }}"/>
+		</div>
+		<div class="form-group">
 			<label for="ships">Ships</label>
 			<input type="number" class="form-control" name="ships" value="{{$fleet->ships }}"/>
 		</div>
@@ -82,6 +90,13 @@
 				<option value="maximum">Maximum</option>
 			} 
 			@endif
+			@if ($fleet->speed_knowledge == "uknown")
+				<option value="uknown" selected>Uknown</option>
+			@else {
+				<option value="uknown">Uknown</option>
+			} 
+			@endif
+
 		</select>
 		<div class="form-group">
 			<label for="destination">Destination</label>

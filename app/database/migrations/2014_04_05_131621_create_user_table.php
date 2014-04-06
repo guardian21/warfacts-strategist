@@ -19,6 +19,7 @@ class CreateUserTable extends Migration {
 			$table->string('email',128)->unique();
 			$table->integer('warfacts_id')->unique();
 			$table->string('empire')->nullable() ;
+			$table->string('faction');
 			$table->boolean('approved');
 			$table->timestamps();
 		});

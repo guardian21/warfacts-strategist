@@ -57,6 +57,7 @@ Route::post('login', function(){
 
 	$credentials = array('username' => $username, 'password' => $password, 'approved' => true);
 	if (Auth::attempt($credentials, $remember) ){
+		Log::info("User " + $username + " successfully log on on " +  date('Y/m/d h:i:s', time()));
 		return Redirect::intended('/');
 	}
 	return Redirect::to('login');
@@ -90,6 +91,13 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 	Route::post('/delete', 'FleetsController@handleDelete');
 
 });
+
+// Perimeter Scan Handling
+
+Route::get('/scanHtml', 'PerimeterScanController@getPerimeterScanHtml');
+Route::post('/scanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
+
+
 //After here all are Test to be removed
 
 

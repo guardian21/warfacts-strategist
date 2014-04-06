@@ -1,0 +1,46 @@
+Important:
+
+
+composer instal sunra php simple sto developer
+
+kai diorthosi sto simple node.php (comment out to if tbody continue)
+
+
+
+
+
+--------------------
+Perimeter scan:
+
+Get fleet empire and faction
+
+Handle if fleet not in global coords (Need to save known universe first)
+
+
+Log who updated what when
+
+
+Handle update for fleets found
+
+
+
+
+
+Parser gia sensors. Ftiaximo gia 
+
+
+
+
+
+
+
+
+---------------
+
+
+diorthosi:
+
+allagi enum vaseis apo ally se neutral
+kai allagi fleet add,update
+
+add faction se user kai se fleet

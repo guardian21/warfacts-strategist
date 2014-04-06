@@ -15,11 +15,19 @@
 		</div>
 
 		<select name="relationship">
-			<option value="ally">Ally</option> 
+			<option value="friend">Friend</option> 
 			<option value="neutral" >Neutral</option>
 			<option value="enemy" selected="">Enemy</option>
 		</select>
+		<div class="form-group">
+			<label for="empire">Empire</label>
+			<input type="text" class="form-control" name="empire" />
+		</div>
 
+		<div class="form-group">
+			<label for="faction">Faction</label>
+			<input type="text" class="form-control" name="faction" />
+		</div>
 		<div class="form-group">
 			<label for="ships">Ships</label>
 			<input type="number" class="form-control" name="ships" />
@@ -51,8 +59,9 @@
 
 		<select name="speed_knowledge">
 			<option value="exact">Exact</option> 
-			<option value="estimation" selected>Estimation</option>
+			<option value="estimation">Estimation</option>
 			<option value="maximum">Maximum</option>
+			<option value="unknown" selected>Unkown</option>			
 		</select>
 
 		<div class="form-group">

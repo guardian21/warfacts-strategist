@@ -15,6 +15,8 @@
 			<input type="number" name="warfacts_id" placeholder="Warfacts_id" />
 			<label for="empire">Empire (Empty if none):</label>
 			<input type="text" name="empire" placeholder="Empire" />
+			<label for="faction">Faction</label>
+			<input type="text" name="faction" placeholder="Faction" />
 			<input type="submit" value="Create">
 		</form>
 	</body>

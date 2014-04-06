@@ -15,7 +15,9 @@ class FleetsController extends BaseController {
 		$fleet = new Fleet;
 		$fleet->name = Input::get('name', 'Unknown');
 		$fleet->owner = Input::get('owner', 'Unknown');
-		$fleet->relationship = Input::get('relationship', 'enemy');
+		$fleet->relationship = Input::get('relationship', 'Unknown');
+		$fleet->empire = Input::get('empire', 'Unknown');		
+		$fleet->faction = Input::get('faction', 'Unknown');
 		$fleet->ships = Input::get('ships');
 		$fleet->tonnage = Input::get('tonnage');
 		$fleet->x = Input::get('x');
@@ -26,8 +28,8 @@ class FleetsController extends BaseController {
 		$fleet->previous_y = null;
 		$fleet->previous_z = null;
 		$fleet->previous_position_updated_at = null;
-		$fleet->speed = Input::get('speed', null);
-		$fleet->speed_knowledge = Input::get('speed_knowledge', 'estimation');
+		$fleet->speed = Input::get('speed');
+		$fleet->speed_knowledge = Input::get('speed_knowledge', 'unknown');
 		$fleet->vector_x = Input::get('vector_x', null);
 		$fleet->vector_y = Input::get('vector_y', null);
 		$fleet->vector_z = Input::get('vector_z', null);
@@ -53,8 +55,11 @@ class FleetsController extends BaseController {
 		$fleet->name = Input::get('name');
 		$fleet->owner = Input::get('owner');
 		$fleet->relationship = Input::get('relationship');
+		$fleet->empire = Input::get('empire');	
+		$fleet->faction = Input::get('faction');
 		$fleet->ships = Input::get('ships');
 		$fleet->tonnage = Input::get('tonnage');
+		$fleet->old_positions = "(". $fleet->previous_x . "," . $fleet->previous_y . "," . $fleet->previous_z . ") " . $fleet->old_positions ; // Add previous position to old
 		$fleet->previous_x = $fleet->x;
 		$fleet->previous_y = $fleet->y;
 		$fleet->previous_z = $fleet->z;
@@ -68,13 +73,12 @@ class FleetsController extends BaseController {
 		$fleet->vector_x = Input::get('vector_x', null);
 		$fleet->vector_y = Input::get('vector_y', null);
 		$fleet->vector_z = Input::get('vector_z', null);
-		if ($fleet->vector_x == null || $fleet->vector_y == null || $fleet->vector_z == null){
+		if ($fleet->speed != null && $fleet->speed !=0){
 			$fleet->vector_x = (($fleet->x - $fleet->previous_x)*4000) / ($fleet->speed * 3.6);	//Each coord 4000km, speed from m/s - > km/h
 			$fleet->vector_y = (($fleet->y - $fleet->previous_y)*4000) / ($fleet->speed * 3.6);
 			$fleet->vector_z = (($fleet->z - $fleet->previous_z)*4000) / ($fleet->speed * 3.6);
 		}
 		$fleet->destination = Input::get('destination');
-		$fleet->old_positions = "(". $fleet->previous_x . "," . $fleet->previous_y . "," . $fleet->previous_z . ") " . $fleet->old_positions ; // Add previous position to old
 		$fleet->battlelogs = Input::get('battlelogs');
 		$fleet->notes = Input::get('notes');
 

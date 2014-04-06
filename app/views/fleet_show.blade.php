@@ -22,6 +22,8 @@
 				<th>Name</th>
 				<th>Owner</th>
 				<th>Relationship</th>
+				<th>Empire</th>
+				<th>Faction</th>
 				<th>Ships</th>
 				<th>Tonnage</th>
 				<th>Warfacts Id</th>
@@ -44,6 +46,8 @@
 					<td>{{ $fleet->name }}</td>
 					<td>{{ $fleet->owner }}</td>
 					<td>{{ $fleet->relationship }}</td>
+					<td>{{ $fleet->empire }}</td>					
+					<td>{{ $fleet->faction }}</td>
 					<td>{{ $fleet->ships }}</td>
 					<td>{{ $fleet->tonnage }}</td>
 					<td>{{ $fleet->warfacts_id }}</td>
