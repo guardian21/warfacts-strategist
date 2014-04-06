@@ -17,16 +17,45 @@ class PerimeterScanController extends BaseController {
 
 		$html = HtmlDomParser::str_get_html("$htmlPage");
 
+		if ($html == null){
+			return View::make("Failed to parse scan");
+		}
 
 		$table = $html->find('*[id=perimTable]',0);
+	
+		if ($table == null){
+			return View::make("Failed to parse scan");
+		}
+
 		$tbody = $table->find('tbody',0);
 
+		if ($tbody == null){
+			return View::make("Failed to parse scan");
+		}
+
 		$rows = $tbody->find('tr');
+	
+		if ($rows == null){
+			return View::make("Failed to parse scan");
+		}
 
 		foreach ($rows as $tr) {
 
+			if ($tr == null){
+				return View::make("Failed to parse scan");
+			}
+
 			$td = $tr->find('td',0);
+
+			if ($td == null){
+			return View::make("Failed to parse scan");
+			}	
+
 			$href = $td->find('a',0)->href;
+			
+			if ($href == null){
+				return View::make("Failed to parse scan");
+			}
 			
 			$fleet = new Fleet;
 
@@ -43,21 +72,42 @@ class PerimeterScanController extends BaseController {
 			$fleet->warfacts_id = substr($href,strpos($href,"tfleet")+7);
 
 			$td = $tr->find('td',1);
+
+			if ($td == null){
+				return View::make("Failed to parse scan");
+			}
+
 			$temp = explode("\n",$td->plaintext);
+
+			if ($temp == null){
+				return View::make("Failed to parse scan");
+			}
 
 			$fleet->owner = $temp[0];
 			$fleet->empire = $temp[1];
 			$fleet->faction = $temp[2];
 
 			$td = $tr->find('td',2);
+			if ($td == null){
+				return View::make("Failed to parse scan");
+			}
 			$fleet->ships = $td->innertext;
 
 			$td = $tr->find('td',3);
+			if ($td == null){
+				return View::make("Failed to parse scan");
+			}
 			$fleet->tonnage = $td->innertext;
 
+			if ($td == null){
+				return View::make("Failed to parse scan");
+			}
 			$td = $tr->find('td',5);
 
 			// Depends on whether on global coords or inside system
+			if ($td == null){
+				return View::make("Failed to parse scan");
+			}
 
 			if (strpos($td->innertext, 'Open Space:') !== False ) {	// $td->innertext contains: Open Space:
 				$position = explode(",",$td->find('a',0)->innertext);
@@ -69,6 +119,9 @@ class PerimeterScanController extends BaseController {
 			}
 			else {
 				//TODO Handle fleets in systems correctly
+				if ($td == null){
+					return View::make("Failed to parse scan");
+				}
 
 				$fleet->notes = "Inside System. Position= " + $td->innertext + " .";
 			}
@@ -79,9 +132,8 @@ class PerimeterScanController extends BaseController {
 
 
 		Log::info("User " +  Auth::user()->username + " successfully updated html perimter scan at " +  date('Y/m/d h:i:s', time()));
-		return Redirect::to('/fleets');
+		return View::make("Succesfully Parsed Perimeter Scan");
 	}
-
 
 	private function addOrUpdateFleet(Fleet $newFleet){
 
