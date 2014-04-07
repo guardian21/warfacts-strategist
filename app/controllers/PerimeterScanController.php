@@ -63,12 +63,16 @@ class PerimeterScanController extends BaseController {
 				
 			$fleet->name = $td->find('a',0)->innertext;
 			$temp = $td->find('*[class]',0);
+
+
 			if ($temp == null){
 				$fleet->relationship = "neutral";
 			}
 			else {
-				$fleet->relationship = $temp->class;				
+				$fleet->relationship = $temp->class;
+				
 			}
+
 			$fleet->warfacts_id = substr($href,strpos($href,"tfleet")+7);
 
 			$td = $tr->find('td',1);
@@ -152,10 +156,10 @@ class PerimeterScanController extends BaseController {
 		}
 		else {
 			$oldFleet->name = $newFleet->name;
-			$oldFleet->owner = $newFleet->name;
-			$oldFleet->relationship = $newFleet->name;
+			$oldFleet->owner = $newFleet->owner;
+			$oldFleet->relationship = $newFleet->relationship;
 			$oldFleet->empire = $newFleet->empire;
-			$oldFleet->faction = $newFleet->name;
+			$oldFleet->faction = $newFleet->faction;
 			$oldFleet->ships = $newFleet->ships;
 			$oldFleet->tonnage = $newFleet->tonnage;
 			$oldFleet->old_positions = "(". $oldFleet->previous_x . "," . $oldFleet->previous_y . "," . $oldFleet->previous_z . ") " . $oldFleet->old_positions ; // Add previous position to old
