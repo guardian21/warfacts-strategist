@@ -13,8 +13,64 @@
 	</div>
 </div>
 
-@if ($fleets->isEmpty())
-	<p>There are no fleets! :(</p>
+	<form action="{{ action('FleetsController@show') }}" method="post" role="form">
+
+	<div>
+		Show Friend:<input type="checkbox" name="friend" value="friend">
+		|||Show Neutral:<input type="checkbox" name="neutral" value="neutral" checked >
+		|||Show Enemy:<input type="checkbox" name="enemy" value="enemy"checked >
+		|||Show Unknown:<input type="checkbox" name="unknown" value="unknown"checked >
+	</div>
+	<div>
+			<label for="shipMin">Minimum Ships</label>
+			<input type="number" class="form-control" name="shipMin" size='12'/>
+			<label for="shipMax">Maximum Ships</label>
+			<input type="number" class="form-control" name="shipMax" size='12'/>
+	</div>
+	<div>
+			<label for="tonMin">Minimum Tonnage</label>
+			<input type="number" class="form-control" name="tonMin" size='12'/>
+			<label for="tonMax">Maximum Tonnage</label>
+			<input type="number" class="form-control" name="tonMax" size='12'/>
+
+	</div>
+	<div>
+		Order by:
+		<select name="orderBy1">
+			<option value="owner">Owner</option> 
+			<option value="empire">Empire</option>
+			<option value="faction">Faction</option>
+			<option value="relationship" selected>Relationship</option>			
+			<option value="ships" >Ships</option>			
+			<option value="tonnage">Tonnage</option>			
+		</select>
+		<select name="orderWay1">
+			<option value="asc">Ascending</option> 
+			<option value="desc" selected>Descending</option>
+		</select>
+		and then By:
+		<select name="orderBy2">
+			<option value="owner">Owner</option> 
+			<option value="empire">Empire</option>
+			<option value="faction">Faction</option>
+			<option value="relationship">Relationship</option>			
+			<option value="ships" selected>Ships</option>			
+			<option value="tonnage">Tonnage</option>			
+		</select>
+		<select name="orderWay2">
+			<option value="asc">Ascending</option> 
+			<option value="desc" selected>Descending</option>
+		</select>
+
+		<input type="submit" value="Refresh" class="btn btn-primary" />
+		<a href="{{ action('FleetsController@show') }}" class="btn-primary">Cancel</a>
+	</div>
+	</form>
+
+
+
+@if (empty($fleets))
+	<p>No fleets matching those criteria(</p>
 @else
 	<table class="table table-striped">
 		<thead>

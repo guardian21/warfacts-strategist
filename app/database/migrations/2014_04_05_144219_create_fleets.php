@@ -16,7 +16,7 @@ class CreateFleets extends Migration {
 			$table->increments('id');
 			$table->string('name')->nullable();
 			$table->string('owner')->nullable();
-			$table->enum('relationship',array('friend','neutral','enemy','uknown'));
+			$table->enum('relationship',array('friend','neutral','enemy','unknown'));
 			$table->string('empire');
 			$table->string('faction');
 			$table->integer('ships');

@@ -4,22 +4,73 @@ class FleetsController extends BaseController {
 	public function show()	{
 		//$fleets = Fleet::all();
 
+		if (Request::isMethod('GET'))
+		{
+			$fleets = Fleet::all();
+			return View::make('fleet_show', compact('fleets'));
+		}
+
 		$showFriend = Input::get('friend');
 		$showNeutral = Input::get('neutral');
 		$showEnemy = Input::get('enemy');
-		$shipMin = Input::get('shipMin');
-		$shipMax = Input::get('shipMax');
-		$shipOp = Input::get('shipOp');
-		$tonOp = Input::get('tonOp');
-		$tonMin = Input::get('tonMin');
-		$tonMax = Input::get('tonMax');
+		$showUnknown = Input::get('unknown');
+		$shipMin = Input::get('shipMin',null);
+		$shipMax = Input::get('shipMax',null);
+		$tonMin = Input::get('tonMin',null);
+		$tonMax = Input::get('tonMax',null);
+		$orderBy1 = Input::get('orderBy1', 'relationship');
+		$orderWay1 = Input::get('orderWay1', 'desc');
+		$orderBy2 = Input::get('orderBy2', 'ships');
+		$orderWay2 = Input::get('orderWay2', 'desc');
 
 
-		$query = Fleet::where('id', '>', '-1') ;	//All
+		$query = DB::table('fleets')->whereId('-1');	//Empty in the beginning
 
-		$query->where('Relationship', '=', 'neutral');
-		
-		$query->orWhere('Relationship', '=','enemy');
+		if ($showFriend){
+			$queryFriend = DB::table('fleets')->whereRelationship('friend') ;	
+			$query->union($queryFriend);
+		}
+		if ($showNeutral){
+			$queryNeutral =DB::table('fleets')->whereRelationship('neutral') ;	
+			$query->union($queryNeutral);
+		}
+		if ($showEnemy){
+			$queryEnemy = DB::table('fleets')->whereRelationship('enemy') ;	
+			$query->union($queryEnemy);
+		}
+		if ($showUnknown){
+			$queryUnknown = DB::table('fleets')->whereRelationship('unknown') ;
+			$query->union($queryUnknown);
+		}
+
+		//TODO Get ship - tonnage and orderby working. Problem is in union
+
+
+/*	
+		if ($shipMin != null && $shipMax == null){
+			$query->where('ships', '>', $shipMin);
+		}
+	
+		else if ($shipMin == null && $shipMax != null) {
+			$query->where('ships', '<', $shipMax);
+		}
+		else if ($shipMin != null && $shipMax != null) {
+			$query->whereBetween('ships', array($shipMin,$shipMax));
+		}
+
+
+		if ($tonMin != null && $tonMax == null){
+			$query->where('tonnage', '>', $tonMin);
+		}
+		else if ($tonMin == null && $tonMax != null) {
+			$query->where('tonnage', '<', $tonMax);
+		}
+		else if ($tonMin != null && $tonMax != null) {
+			$query->whereBetween('tonnage', array($tonMin,$tonMax));
+		}
+*/
+
+
 
 		$fleets = $query->get();
 
@@ -37,7 +88,7 @@ class FleetsController extends BaseController {
 		$fleet = new Fleet;
 		$fleet->name = Input::get('name', 'Unknown');
 		$fleet->owner = Input::get('owner', 'Unknown');
-		$fleet->relationship = Input::get('relationship', 'Unknown');
+		$fleet->relationship = Input::get('relationship', 'unknown');
 		$fleet->empire = Input::get('empire', 'Unknown');		
 		$fleet->faction = Input::get('faction', 'Unknown');
 		$fleet->ships = Input::get('ships');

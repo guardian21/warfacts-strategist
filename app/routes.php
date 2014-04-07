@@ -86,6 +86,7 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 
 	//Handle form submissions
 
+	Route::post('/', 'FleetsController@show');
 	Route::post('/add', 'FleetsController@handleAdd');
 	Route::post('/update', 'FleetsController@handleUpdate');
 	Route::post('/delete', 'FleetsController@handleDelete');

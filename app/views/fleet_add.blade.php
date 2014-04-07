@@ -17,7 +17,8 @@
 		<select name="relationship">
 			<option value="friend">Friend</option> 
 			<option value="neutral" >Neutral</option>
-			<option value="enemy" selected="">Enemy</option>
+			<option value="enemy" >Enemy</option>
+			<option value="unknown" selected="">Unknown</option>
 		</select>
 		<div class="form-group">
 			<label for="empire">Empire</label>
@@ -79,6 +80,6 @@
 
 
 		<input type="submit" value="Add" class="btn btn-primary" />
-		<a href="{{ action('FleetsController@show') }}" class="btn btn-link">Cancel</a>
+		<a href="{{ action('FleetsController@show') }}" class="btn btn-primary">Cancel</a>
 	</form>
 @stop

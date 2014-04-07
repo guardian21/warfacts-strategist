@@ -7,6 +7,6 @@
 <form action="{{ action('FleetsController@handleDelete') }}" method="post" role="form">
 <input type="hidden" name="fleet" value="{{ $fleet->id }}" />
 <input type="submit" class="btn btn-danger" value="Yes" />
-<a href="{{ action('FleetsController@show') }}" class="btn btn-default">No</a>
+<a href="{{ action('FleetsController@show') }}" class="btn btn-primary">No</a>
 </form>
 @stop

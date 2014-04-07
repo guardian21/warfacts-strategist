@@ -16,10 +16,10 @@
 			<input type="text" class="form-control" name="owner" value="{{$fleet->owner }}"/>
 		</div>
 		<select name="relationship">
-			@if ($fleet->relationship == "ally")
-				<option value="ally" selected>Ally</option>
+			@if ($fleet->relationship == "friend")
+				<option value="friend" selected>Friend</option>
 			@else {
-				<option value="ally">Ally</option>
+				<option value="friend">Friend</option>
 			} 
 			@endif
 			@if ($fleet->relationship == "neutral")
@@ -34,6 +34,13 @@
 				<option value="enemy">Enemy</option>
 			} 
 			@endif
+			@if ($fleet->relationship == "unknown")
+				<option value="unknown" selected>Unknown</option>
+			@else {
+				<option value="unknown">Unknown</option>
+			} 
+			@endif
+
 		</select>
 		<div class="form-group">
 			<label for="empire">Empire</label>
@@ -111,6 +118,6 @@
 			<textarea class="form-control" name="notes" cols="60" rows="10" >{{$fleet->notes }}</textarea>
 		</div>
 		<input type="submit" value="Update" class="btn btn-primary" />
-		<a href="{{ action('FleetsController@show') }}" class="btn btn-link">Cancel</a>
+		<a href="{{ action('FleetsController@show') }}" class="btn btn-primary">Cancel</a>
 	</form>
 @stop
