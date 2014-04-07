@@ -17,9 +17,9 @@ class FleetsController extends BaseController {
 
 		$query = Fleet::all() ;	//All
 
-		$query->whereRelationship('neutral');
+		$query->where('Relationship', '=', 'neutral');
 		
-		$query->orWhereRelationship('enemy');
+		$query->orWhere('Relationship', '=','enemy');
 
 		$fleets = $query->get();
 
