@@ -39,7 +39,7 @@ class FleetsController extends BaseController {
 			$query->union($queryEnemy);
 		}
 		if ($showUnknown){
-			$queryUnknown = DB::table('fleets')->whereRelationship('unknown')->orWhere('relationship', '=', '') ;
+			$queryUnknown = DB::table('fleets')->whereRelationship('unknown');
 			$query->union($queryUnknown);
 		}
 
