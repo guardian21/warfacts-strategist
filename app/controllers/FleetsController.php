@@ -2,7 +2,19 @@
 
 class FleetsController extends BaseController { 
 	public function show()	{
-		$fleets = Fleet::all();
+		//$fleets = Fleet::all();
+
+
+		$query = Fleet::where('id','>','-1') ;	//All
+
+		$query->where('relationship', '=' , 'neutral');
+		
+		$query->orwhere('relationship', '=' , 'enemy');
+
+		$fleets = $query->get();
+
+
+
 		return View::make('fleet_show', compact('fleets'));
 	}
 

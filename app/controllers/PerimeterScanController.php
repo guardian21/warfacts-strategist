@@ -18,43 +18,43 @@ class PerimeterScanController extends BaseController {
 		$html = HtmlDomParser::str_get_html("$htmlPage");
 
 		if ($html == null){
-			return Response::make("Failed to parse scan 01. Input = ");
+			return Response::make("Failed to parse scan 01.");
 		}
 
 		$table = $html->find('*[id=perimTable]',0);
 	
 		if ($table == null){
-			return Response::make("Failed to parse scan 02. Input = ");
+			return Response::make("Failed to parse scan 02.");
 		}
 
 		$tbody = $table->find('tbody',0);
 
 		if ($tbody == null){
-			return Response::make("Failed to parse scan 03. Input = ");
+			return Response::make("Failed to parse scan 03.");
 		}
 
 		$rows = $tbody->find('tr');
 	
 		if ($rows == null){
-			return Response::make("Failed to parse scan 04. Input = ");
+			return Response::make("Failed to parse scan 04.");
 		}
 
 		foreach ($rows as $tr) {
 
 			if ($tr == null){
-			return Response::make("Failed to parse scan 05. Input = ");
+			return Response::make("Failed to parse scan 05.");
 			}
 
 			$td = $tr->find('td',0);
 
 			if ($td == null){
-			return Response::make("Failed to parse scan 06. Input = ");
+			return Response::make("Failed to parse scan 06.");
 			}	
 
 			$href = $td->find('a',0)->href;
 			
 			if ($href == null){
-			return Response::make("Failed to parse scan 07. Input = " );
+			return Response::make("Failed to parse scan 07." );
 			}
 			
 			$fleet = new Fleet;
@@ -74,13 +74,13 @@ class PerimeterScanController extends BaseController {
 			$td = $tr->find('td',1);
 
 			if ($td == null){
-			return Response::make("Failed to parse scan 08. Input = ");
+			return Response::make("Failed to parse scan 08.");
 			}
 
 			$temp = explode("\n",$td->plaintext);
 
 			if ($temp == null){
-			return Response::make("Failed to parse scan 09. Input = " );
+			return Response::make("Failed to parse scan 09." );
 			}
 
 			$fleet->owner = $temp[0];
@@ -89,24 +89,24 @@ class PerimeterScanController extends BaseController {
 
 			$td = $tr->find('td',2);
 			if ($td == null){
-			return Response::make("Failed to parse scan 10. Input = ");
+			return Response::make("Failed to parse scan 10.");
 			}
 			$fleet->ships = $td->innertext;
 
 			$td = $tr->find('td',3);
 			if ($td == null){
-			return Response::make("Failed to parse scan 11. Input = ");
+			return Response::make("Failed to parse scan 11.");
 			}
 			$fleet->tonnage = $td->innertext;
 
 			if ($td == null){
-			return Response::make("Failed to parse scan 12. Input = ");
+			return Response::make("Failed to parse scan 12.");
 			}
 			$td = $tr->find('td',5);
 
 			// Depends on whether on global coords or inside system
 			if ($td == null){
-			return Response::make("Failed to parse scan 13. Input = ");
+			return Response::make("Failed to parse scan 13.");
 			}
 
 			if (strpos($td->innertext, 'Open Space:') !== False ) {	// $td->innertext contains: Open Space:
@@ -120,8 +120,10 @@ class PerimeterScanController extends BaseController {
 			else {
 				//TODO Handle fleets in systems correctly
 				if ($td == null){
-			return Response::make("Failed to parse scan 14. Input = ");
+					return Response::make("Failed to parse scan 14.");
 				}
+
+				return Response::make("Fleet not in open Space. Scan not parsed");
 
 				$fleet->notes = "Inside System. Position= " + $td->innertext + " .";
 			}
