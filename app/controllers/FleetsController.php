@@ -15,7 +15,7 @@ class FleetsController extends BaseController {
 		$tonMax = Input::get('tonMax');
 
 
-		$query = Fleet::all() ;	//All
+		$query = Fleet::where('id', '>', '-1') ;	//All
 
 		$query->where('Relationship', '=', 'neutral');
 		
