@@ -4,12 +4,22 @@ class FleetsController extends BaseController {
 	public function show()	{
 		//$fleets = Fleet::all();
 
+		$showFriend = Input::get('friend');
+		$showNeutral = Input::get('neutral');
+		$showEnemy = Input::get('enemy');
+		$shipMin = Input::get('shipMin');
+		$shipMax = Input::get('shipMax');
+		$shipOp = Input::get('shipOp');
+		$tonOp = Input::get('tonOp');
+		$tonMin = Input::get('tonMin');
+		$tonMax = Input::get('tonMax');
 
-		$query = Fleet::where('id','>','-1') ;	//All
 
-		$query->where('relationship', '=' , 'neutral');
+		$query = Fleet::all() ;	//All
+
+		$query->whereRelationship('neutral');
 		
-		$query->orWhere('relationship', '=' , 'enemy');
+		$query->orWhereRelationship('enemy');
 
 		$fleets = $query->get();
 
