@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/', 'FleetsController@show');
+Route::get('/', function()
+{
+	return View::make('hello');
+});
 
 
 // User Handling, authantication etc
@@ -35,13 +38,6 @@ Route::post('/user', function(){
 	return Response::make('User Added!');
 });
 
-Route::get('/fleets/enemy', array(
-	'before' => 'auth',
-	function()
-	{
-		return View::make('enemy_fleets');
-	}
-));
 
 Route::get('/login', function(){
 	return View::make('login_form');
@@ -94,23 +90,4 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 
 Route::get('/scanHtml', 'PerimeterScanController@getPerimeterScanHtml');
 Route::post('/scanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
-
-
-//After here all are Test to be removed
-
-
-// SOS double quotes to show variables like that
-Route::get('/{number}/page', function($number){
-	return ("This is the {$number}  page");
-});
-
-Route::get('redirect', function(){
-	return Redirect::to('/first/page');
-});
-
-//SOS Note: testview, not testview.php
-route::get('/{uri}', function($uri){
-	$data['typed_uri'] = $uri;
-	return View::make('testview',$data);
-});
 
