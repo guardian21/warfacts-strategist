@@ -99,6 +99,9 @@
 			</tr>
 		</thead>
 		<tbody>
+
+http://www.war-facts.com/fleet_navigation.php?x=29965&y=37602&z=-1514&tpos=global&tfleet=16757
+
 			@foreach($fleets as $fleet)
 				<tr class={{$fleet->relationship}}>
 					<td>
