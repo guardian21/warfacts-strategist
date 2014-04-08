@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Warring Factions Strategist</title>
-		<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('packages/bootstrap/css/bootstrap.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('assets/css/general.css') }}" />
+
 	</head>
 
 	<body>

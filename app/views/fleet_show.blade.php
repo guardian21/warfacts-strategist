@@ -16,22 +16,26 @@
 	<form action="{{ action('FleetsController@show') }}" method="post" role="form">
 
 	<div>
-		Show Friend:<input type="checkbox" name="friend" value="friend">
-		|||Show Neutral:<input type="checkbox" name="neutral" value="neutral" checked >
-		|||Show Enemy:<input type="checkbox" name="enemy" value="enemy"checked >
-		|||Show Unknown:<input type="checkbox" name="unknown" value="unknown"checked >
+		<label for="friend">Show Friend:</label>
+		<input type="checkbox" name="friend" value="friend">
+		<label for="neutral">Show Neutral:</label>
+		<input type="checkbox" name="neutral" value="neutral" checked >
+		<label for="enemy">Show Enemy:</label>
+		<input type="checkbox" name="enemy" value="enemy"checked >
+		<label for="unknown">Show Unknown:</label>
+		<input type="checkbox" name="unknown" value="unknown"checked >
 	</div>
 	<div>
 			<label for="shipMin">Minimum Ships</label>
-			<input type="number" class="form-control" name="shipMin" size='12'/>
+			<input type="number"  name="shipMin" size='12'/>
 			<label for="shipMax">Maximum Ships</label>
-			<input type="number" class="form-control" name="shipMax" size='12'/>
+			<input type="number" name="shipMax" size='12'/>
 	</div>
 	<div>
 			<label for="tonMin">Minimum Tonnage</label>
-			<input type="number" class="form-control" name="tonMin" size='12'/>
+			<input type="number"  name="tonMin" size='12'/>
 			<label for="tonMax">Maximum Tonnage</label>
-			<input type="number" class="form-control" name="tonMax" size='12'/>
+			<input type="number"  name="tonMax" size='12'/>
 
 	</div>
 	<div>
@@ -83,9 +87,7 @@
 				<th>Ships</th>
 				<th>Tonnage</th>
 				<th>Warfacts Id</th>
-				<th>X</th>
-				<th>Y</th>
-				<th>Z</th>
+				<th>Position</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
@@ -98,9 +100,9 @@
 		</thead>
 		<tbody>
 			@foreach($fleets as $fleet)
-				<tr>
+				<tr class={{$fleet->relationship}}>
 					<td>
-					<a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} >
+					<a href={{ "http://www.war-facts.com/fleet_navigation.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z."&tpos=global&tfleet=".$fleet->warfacts_id ; }} target="_blank">
 						{{ $fleet->name }} </a></td>
 					<td>{{ $fleet->owner }}</td>
 					<td>{{ $fleet->relationship }}</td>
@@ -109,9 +111,8 @@
 					<td>{{ $fleet->ships }}</td>
 					<td>{{ $fleet->tonnage }}</td>
 					<td>{{ $fleet->warfacts_id }}</td>
-					<td>{{ $fleet->x }}</td>
-					<td>{{ $fleet->y }}</td>
-					<td>{{ $fleet->z }}</td>
+					<td><a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} target="_blank" >
+						({{ $fleet->x }},{{ $fleet->y }},{{ $fleet->z }})</td>
 					<td>{{ $fleet->speed }}</td>
 					<td>{{ $fleet->speed_knowledge }}</td>
 					<td>{{ $fleet->vector_x }}</td>
