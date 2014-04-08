@@ -7,8 +7,8 @@
 </div>
 
 
-<div class="panel panel-default">
-	<div class="panel-body">
+<div >
+	<div >
 		<a href="{{ action('FleetsController@add') }}" class="btn btn-primary">Add a fleet</a>
 	</div>
 </div>
@@ -99,8 +99,6 @@
 			</tr>
 		</thead>
 		<tbody>
-
-http://www.war-facts.com/fleet_navigation.php?x=29965&y=37602&z=-1514&tpos=global&tfleet=16757
 
 			@foreach($fleets as $fleet)
 				<tr class={{$fleet->relationship}}>
