@@ -12,14 +12,16 @@
 		<div class="form-group">
 			<label for="owner">Owner</label>
 			<input type="text" class="form-control" name="owner" />
+		<div class="form-group">
+			<label for="relationship">Relationship</label>
+			<select name="relationship">
+				<option value="friend">Friend</option> 
+				<option value="neutral" >Neutral</option>
+				<option value="enemy" >Enemy</option>
+				<option value="unknown" selected="">Unknown</option>
+			</select>
 		</div>
 
-		<select name="relationship">
-			<option value="friend">Friend</option> 
-			<option value="neutral" >Neutral</option>
-			<option value="enemy" >Enemy</option>
-			<option value="unknown" selected="">Unknown</option>
-		</select>
 		<div class="form-group">
 			<label for="empire">Empire</label>
 			<input type="text" class="form-control" name="empire" />
@@ -57,14 +59,15 @@
 			<label for="speed">Speed (m/s)</label>
 			<input type="number" class="form-control" name="speed" />
 		</div>
-
-		<select name="speed_knowledge">
-			<option value="exact">Exact</option> 
-			<option value="estimation">Estimation</option>
-			<option value="maximum">Maximum</option>
-			<option value="unknown" selected>Unkown</option>			
-		</select>
-
+		<div class="form-group">
+			<label for="speed_knowledge">Speed Knowledge</label>
+			<select name="speed_knowledge">
+				<option value="exact">Exact</option> 
+				<option value="estimation">Estimation</option>
+				<option value="maximum">Maximum</option>
+				<option value="unknown" selected>Unkown</option>			
+			</select>
+		</div>
 		<div class="form-group">
 			<label for="destination">Destination</label>
 			<input type="text" class="form-control" name="destination" />
