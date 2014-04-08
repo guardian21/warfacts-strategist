@@ -1,0 +1,26 @@
+.friend {
+	color: blue;
+}
+
+.friend a{
+	color: blue;
+}
+
+.enemy {
+	color: red;
+}
+
+.enemy a{
+	color: red;
+}
+
+
+.neutral {
+	color: gray;
+}
+
+.neutral a{
+	color: gray;
+}
+
+
