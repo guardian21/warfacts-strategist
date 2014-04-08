@@ -11,82 +11,89 @@ class FleetsController extends BaseController {
 		}
 
 
-		$showFriend = Input::get('friend');
-		$showNeutral = Input::get('neutral');
-		$showEnemy = Input::get('enemy');
-		$showUnknown = Input::get('unknown');
-		$owner = Input::get('owner');
-		$empire = Input::get('empire');
-		$faction = Input::get('faction');
-		$shipMin = Input::get('shipMin',null);
-		$shipMax = Input::get('shipMax',null);
-		$tonMin = Input::get('tonMin',null);
-		$tonMax = Input::get('tonMax',null);
+
 		$orderBy1 = Input::get('orderBy1', 'relationship');
 		$orderWay1 = Input::get('orderWay1', 'desc');
 		$orderBy2 = Input::get('orderBy2', 'ships');
 		$orderWay2 = Input::get('orderWay2', 'desc');
 
 
-		$query = DB::table('fleets')->whereId('-1');	//Empty in the beginning
-
-		if ($showFriend){
-			$queryFriend = DB::table('fleets')->whereRelationship('friend') ;	
-			$query->union($queryFriend);
-		}
-		if ($showNeutral){
-			$queryNeutral =DB::table('fleets')->whereRelationship('neutral') ;	
-			$query->union($queryNeutral);
-		}
-		if ($showEnemy){
-			$queryEnemy = DB::table('fleets')->whereRelationship('enemy') ;	
-			$query->union($queryEnemy);
-		}
-		if ($showUnknown){
-			$queryUnknown = DB::table('fleets')->whereRelationship('unknown');
-			$query->union($queryUnknown);
-		}
-
-		//TODO Get ship - tonnage limits, owner/empire/faction and orderby working. Problem is in union
+		 $fleets = DB::table('fleets')->where(function($query) {
 
 
-/*
+			$showFriend = Input::get('friend');
+			$showNeutral = Input::get('neutral');
+			$showEnemy = Input::get('enemy');
+			$showUnknown = Input::get('unknown');
+			$name = Input::get('name', null);
+			$owner = Input::get('owner',null);
+			$empire = Input::get('empire',null);
+			$faction = Input::get('faction',null);
+			$shipMin = Input::get('shipMin',null);
+			$shipMax = Input::get('shipMax',null);
+			$tonMin = Input::get('tonMin',null);
+			$tonMax = Input::get('tonMax',null);
 
-		if (Input::has('owner')){
-			$query->whereOwner($owner);
-		}
+			if($name != null){
+				$query->where('name', 'LIKE', "%$name%");
+			}
 
+			if($owner != null){
+				$query->where('owner', 'LIKE', "%$owner%");
+			}
 
+			if($empire != null){
+				$query->where('empire', 'LIKE', "%$empire%");
+			}
 
-	
-		if ($shipMin != null && $shipMax == null){
-			$query->where('ships', '>', $shipMin);
-		}
-	
-		else if ($shipMin == null && $shipMax != null) {
-			$query->where('ships', '<', $shipMax);
-		}
-		else if ($shipMin != null && $shipMax != null) {
-			$query->whereBetween('ships', array($shipMin,$shipMax));
-		}
-
-
-		if ($tonMin != null && $tonMax == null){
-			$query->where('tonnage', '>', $tonMin);
-		}
-		else if ($tonMin == null && $tonMax != null) {
-			$query->where('tonnage', '<', $tonMax);
-		}
-		else if ($tonMin != null && $tonMax != null) {
-			$query->whereBetween('tonnage', array($tonMin,$tonMax));
-		}
-*/
+		 	if(Input::has('faction')){
+		 		$query->where('faction', '=' , $faction);
+		 	}
 
 
+			if ($shipMin != null && $shipMax == null){
+				$query->where('ships', '>', $shipMin);
+			}
+		
+			else if ($shipMin == null && $shipMax != null) {
+				$query->where('ships', '<', $shipMax);
+			}
+			else if ($shipMin != null && $shipMax != null) {
+				$query->whereBetween('ships', array($shipMin,$shipMax));
+			}
 
-		$fleets = $query->get();
+
+			if ($tonMin != null && $tonMax == null){
+				$query->where('tonnage', '>', $tonMin);
+			}
+			else if ($tonMin == null && $tonMax != null) {
+				$query->where('tonnage', '<', $tonMax);
+			}
+			else if ($tonMin != null && $tonMax != null) {
+				$query->whereBetween('tonnage', array($tonMin,$tonMax));
+			}
 
 
+
+			if (!$showFriend){
+				$query->where('relationship', '<>', 'friend');
+			}
+			if (!$showNeutral){
+				$query->where('relationship', '<>', 'neutral');
+			}
+			if (!$showEnemy){
+				$query->where('relationship', '<>', 'enemy');
+			}
+			if (!$showUnknown){
+				$query->where('relationship', '<>', 'unknown');
+			}
+
+		})
+		->orderBy($orderBy1,$orderWay1)
+		->orderBy($orderBy2,$orderWay2)
+		->get();
+
+		Input::flash();
 		return View::make('fleet_show', compact('fleets'));
 	}
 

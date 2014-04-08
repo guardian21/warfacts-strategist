@@ -17,60 +17,62 @@
 
 	<div>
 		<label for="friend">Show Friend:</label>
-		<input type="checkbox" name="friend" value="friend">
-		<label for="neutral">Show Neutral:</label>
-		<input type="checkbox" name="neutral" value="neutral" checked >
+		<input type="checkbox" name="friend" value="friend" @if (Input::old('friend')) checked @endif >
+		<label for="neutral">Show Neutral:</label>		
+		<input type="checkbox" name="neutral" value="neutral" @if (Input::old('neutral')) checked @endif >
 		<label for="enemy">Show Enemy:</label>
-		<input type="checkbox" name="enemy" value="enemy"checked >
+		<input type="checkbox" name="enemy" value="enemy" @if (Input::old('enemy')) checked @endif >
 		<label for="unknown">Show Unknown:</label>
-		<input type="checkbox" name="unknown" value="unknown"checked >
+		<input type="checkbox" name="unknown" value="unknown" @if (Input::old('unknown')) checked @endif >
 	</div>
 	<div>
+		<label for="name">Name:</label>
+		<input type="text" name="name" value= {{ Input::old('name', null) }} >
 		<label for="owner">Owner:</label>
-		<input type="text" name="owner" >
+		<input type="text" name="owner" value= {{ Input::old('owner', null) }} >
 		<label for="empire">Empire:</label>
-		<input type="text" name="empire" >
+		<input type="text" name="empire" value= {{ Input::old('empire', null) }} >
 		<label for="faction">Faction:</label>
-		<input type="text" name="faction" >
+		<input type="text" name="faction" value= {{ Input::old('faction', null) }} >
 	<div>
 			<label for="shipMin">Minimum Ships</label>
-			<input type="number"  name="shipMin" size='12'/>
+			<input type="number"  name="shipMin" size='12' value= {{ Input::old('shipMin', null) }} >
 			<label for="shipMax">Maximum Ships</label>
-			<input type="number" name="shipMax" size='12'/>
+			<input type="number" name="shipMax" size='12' value= {{ Input::old('shipMax', null) }} >
 	</div>
 	<div>
 			<label for="tonMin">Minimum Tonnage</label>
-			<input type="number"  name="tonMin" size='12'/>
+			<input type="number"  name="tonMin" size='12' value= {{ Input::old('tonMin', null) }} >
 			<label for="tonMax">Maximum Tonnage</label>
-			<input type="number"  name="tonMax" size='12'/>
+			<input type="number"  name="tonMax" size='12' value= {{ Input::old('tonMax', null) }} >
 
 	</div>
 	<div>
 		Order by:
 		<select name="orderBy1">
-			<option value="owner">Owner</option> 
-			<option value="empire">Empire</option>
-			<option value="faction">Faction</option>
-			<option value="relationship" selected>Relationship</option>			
-			<option value="ships" >Ships</option>			
-			<option value="tonnage">Tonnage</option>			
+			<option value="owner"  @if (Input::old('orderBy1') == "owner" ) selected @endif > Owner</option> 
+			<option value="empire"  @if (Input::old('orderBy1') == "empire" ) selected @endif >Empire</option>
+			<option value="faction"  @if (Input::old('orderBy1') == "faction" ) selected @endif >Faction</option>
+			<option value="relationship"   @if (Input::old('orderBy1') == "relationship" ) selected @endif >Relationship</option>			
+			<option value="ships"   @if (Input::old('orderBy1') == "ships" ) selected @endif >Ships</option>			
+			<option value="tonnage"  @if (Input::old('orderBy1') == "tonnage" ) selected @endif >Tonnage</option>			
 		</select>
 		<select name="orderWay1">
-			<option value="asc">Ascending</option> 
-			<option value="desc" selected>Descending</option>
+			<option value="asc" @if (Input::old('orderWay1') == "asc" ) selected @endif>Ascending</option> 
+			<option value="desc" @if (Input::old('orderWay1') == "desc" ) selected @endif>Descending</option>
 		</select>
 		and then By:
 		<select name="orderBy2">
-			<option value="owner">Owner</option> 
-			<option value="empire">Empire</option>
-			<option value="faction">Faction</option>
-			<option value="relationship">Relationship</option>			
-			<option value="ships" selected>Ships</option>			
-			<option value="tonnage">Tonnage</option>			
+			<option value="owner"  @if (Input::old('orderBy2') == "owner" ) selected @endif > Owner</option> 
+			<option value="empire"  @if (Input::old('orderBy2') == "empire" ) selected @endif >Empire</option>
+			<option value="faction"  @if (Input::old('orderBy2') == "faction" ) selected @endif >Faction</option>
+			<option value="relationship"   @if (Input::old('orderBy2') == "relationship" ) selected @endif >Relationship</option>			
+			<option value="ships"   @if (Input::old('orderBy2') == "ships" ) selected @endif >Ships</option>			
+			<option value="tonnage"  @if (Input::old('orderBy2') == "tonnage" ) selected @endif >Tonnage</option>			
 		</select>
 		<select name="orderWay2">
-			<option value="asc">Ascending</option> 
-			<option value="desc" selected>Descending</option>
+			<option value="asc" @if (Input::old('orderWay2') == "asc" ) selected @endif>Ascending</option> 
+			<option value="desc" @if (Input::old('orderWay2') == "desc" ) selected @endif>Descending</option>
 		</select>
 
 		<input type="submit" value="Refresh" class="btn btn-primary" />
