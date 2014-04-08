@@ -15,6 +15,9 @@ class FleetsController extends BaseController {
 		$showNeutral = Input::get('neutral');
 		$showEnemy = Input::get('enemy');
 		$showUnknown = Input::get('unknown');
+		$owner = Input::get('owner');
+		$empire = Input::get('empire');
+		$faction = Input::get('faction');
 		$shipMin = Input::get('shipMin',null);
 		$shipMax = Input::get('shipMax',null);
 		$tonMin = Input::get('tonMin',null);
@@ -44,11 +47,18 @@ class FleetsController extends BaseController {
 			$query->union($queryUnknown);
 		}
 
+		//TODO Get ship - tonnage limits, owner/empire/faction and orderby working. Problem is in union
 
-		//TODO Get ship - tonnage and orderby working. Problem is in union
+
+/*
+
+		if (Input::has('owner')){
+			$query->whereOwner($owner);
+		}
 
 
-/*	
+
+	
 		if ($shipMin != null && $shipMax == null){
 			$query->where('ships', '>', $shipMin);
 		}

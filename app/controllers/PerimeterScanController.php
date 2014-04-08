@@ -178,7 +178,7 @@ class PerimeterScanController extends BaseController {
 		//	$oldFleet->speed_knowledge = $newFleet->speed_knowledge;
 		//	$oldFleet->destination = $newFleet->destination;
 		//	$oldFleet->battlelogs = $newFleet->battlelogs;
-			$oldFleet->notes += $newFleet->notes;
+		//	$oldFleet->notes += $newFleet->notes;
 
 			$oldFleet->save();
 

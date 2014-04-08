@@ -50,7 +50,7 @@ Route::post('/user', function(){
 		$user->approved    = false;
 		$user->save();
 
-		return Response::make('User successfully added!\n Please contact an administrator to manually approve your account.');
+		return Response::make('User successfully added! Please contact an administrator to manually approve your account.');
 	}
 	else {
 		return Redirect::to('/user')->withErrors($validator)->withInput();

@@ -26,6 +26,13 @@
 		<input type="checkbox" name="unknown" value="unknown"checked >
 	</div>
 	<div>
+		<label for="owner">Owner:</label>
+		<input type="text" name="owner" >
+		<label for="empire">Empire:</label>
+		<input type="text" name="empire" >
+		<label for="faction">Faction:</label>
+		<input type="text" name="faction" >
+	<div>
 			<label for="shipMin">Minimum Ships</label>
 			<input type="number"  name="shipMin" size='12'/>
 			<label for="shipMax">Maximum Ships</label>
