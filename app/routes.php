@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('hello');
+	return View::make('main');
 });
 
 
@@ -72,12 +72,14 @@ Route::post('login', function(){
 		Log::info("User " + $username + " successfully log on on " +  date('Y/m/d h:i:s', time()));
 		return Redirect::intended('/');
 	}
-	return Redirect::to('login');
+	else {
+		return Redirect::to('login');
+	}
 });
 
 Route::get('/logout', function(){
 	Auth::logout();
-	return Response::make('Logged out');
+	return View::make('main');
 });
 
 
