@@ -83,9 +83,7 @@
 				<th>Ships</th>
 				<th>Tonnage</th>
 				<th>Warfacts Id</th>
-				<th>X</th>
-				<th>Y</th>
-				<th>Z</th>
+				<th>Position</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
@@ -97,10 +95,13 @@
 			</tr>
 		</thead>
 		<tbody>
+
+http://www.war-facts.com/fleet_navigation.php?x=29965&y=37602&z=-1514&tpos=global&tfleet=16757
+
 			@foreach($fleets as $fleet)
-				<tr>
+				<tr class={{$fleet->relationship}}>
 					<td>
-					<a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} >
+					<a href={{ "http://www.war-facts.com/fleet_navigation.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z."&tpos=global&tfleet=".$fleet->warfacts_id ; }} target="_blank">
 						{{ $fleet->name }} </a></td>
 					<td>{{ $fleet->owner }}</td>
 					<td>{{ $fleet->relationship }}</td>
@@ -109,9 +110,8 @@
 					<td>{{ $fleet->ships }}</td>
 					<td>{{ $fleet->tonnage }}</td>
 					<td>{{ $fleet->warfacts_id }}</td>
-					<td>{{ $fleet->x }}</td>
-					<td>{{ $fleet->y }}</td>
-					<td>{{ $fleet->z }}</td>
+					<td><a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} target="_blank" >
+						({{ $fleet->x }},{{ $fleet->y }},{{ $fleet->z }})</td>
 					<td>{{ $fleet->speed }}</td>
 					<td>{{ $fleet->speed_knowledge }}</td>
 					<td>{{ $fleet->vector_x }}</td>

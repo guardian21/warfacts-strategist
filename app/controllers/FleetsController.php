@@ -1,7 +1,7 @@
 <?php
 
 class FleetsController extends BaseController { 
-	public function show()	{
+	public function show() {
 		//$fleets = Fleet::all();
 
 		if (Request::isMethod('GET'))
@@ -9,6 +9,7 @@ class FleetsController extends BaseController {
 			$fleets = Fleet::all();
 			return View::make('fleet_show', compact('fleets'));
 		}
+
 
 		$showFriend = Input::get('friend');
 		$showNeutral = Input::get('neutral');
@@ -43,6 +44,7 @@ class FleetsController extends BaseController {
 			$query->union($queryUnknown);
 		}
 
+
 		//TODO Get ship - tonnage and orderby working. Problem is in union
 
 
@@ -73,7 +75,6 @@ class FleetsController extends BaseController {
 
 
 		$fleets = $query->get();
-
 
 
 		return View::make('fleet_show', compact('fleets'));
