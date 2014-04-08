@@ -93,6 +93,7 @@ class FleetsController extends BaseController {
 		$fleet->faction = Input::get('faction', 'Unknown');
 		$fleet->ships = Input::get('ships');
 		$fleet->tonnage = Input::get('tonnage');
+		$fleet->warfacts_id = Input::get('warfacts_id');
 		$fleet->x = Input::get('x');
 		$fleet->y = Input::get('y');
 		$fleet->z = Input::get('z');

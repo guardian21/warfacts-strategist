@@ -27,15 +27,34 @@ Route::get('/user', function(){
 
 Route::post('/user', function(){
 	$user = new User();
-	$user->username    = Input::get('username');
-	$user->password    = Hash::make(Input::get('password'));
-	$user->email       = Input::get('email');
-	$user->warfacts_id = (int) Input::get('warfacts_id');
-	$user->empire      = Input::get('empire', null);
-	$user->approved    = false;
-	$user->save();
 
-	return Response::make('User Added!');
+	$rules = array(
+	'username' => 'required|unique:users|alpha_num|min:3|max:32',
+	'email'    => 'required|unique:users|email',
+	'password' => 'required|confirmed|min:3',
+	'warfacts_id' => 'required|unique:users|integer',
+	'faction'  => 'required'
+	);
+
+	$data = Input::all();
+
+	$validator = Validator::make($data, $rules);
+
+	if ($validator->passes()) {
+
+		$user->username    = Input::get('username');
+		$user->password    = Hash::make(Input::get('password'));
+		$user->email       = Input::get('email');
+		$user->warfacts_id = (int) Input::get('warfacts_id');
+		$user->empire      = Input::get('empire', null);
+		$user->approved    = false;
+		$user->save();
+
+		return Response::make('User successfully added!\n Please contact an administrator to manually approve your account.');
+	}
+	else {
+		return Redirect::to('/user')->withErrors($validator)->withInput();
+	}
 });
 
 
@@ -88,6 +107,9 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 
 // Perimeter Scan Handling
 
-Route::get('/scanHtml', 'PerimeterScanController@getPerimeterScanHtml');
-Route::post('/scanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
 
+Route::get('/perimeterScanHtml', 'PerimeterScanController@getPerimeterScanHtml');
+Route::post('/perimeterScanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
+
+Route::get('/sensorScanHtml', 'SensorScanController@getSensorScanHtml');
+Route::post('/sensorScanHtml', 'SensorScanController@parseSensorScanHtml');

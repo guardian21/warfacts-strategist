@@ -99,7 +99,9 @@
 		<tbody>
 			@foreach($fleets as $fleet)
 				<tr>
-					<td>{{ $fleet->name }}</td>
+					<td>
+					<a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} >
+						{{ $fleet->name }} </a></td>
 					<td>{{ $fleet->owner }}</td>
 					<td>{{ $fleet->relationship }}</td>
 					<td>{{ $fleet->empire }}</td>					
