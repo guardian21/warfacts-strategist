@@ -115,6 +115,7 @@ class FleetsController extends BaseController {
 		$fleet->x = Input::get('x');
 		$fleet->y = Input::get('y');
 		$fleet->z = Input::get('z');
+		$fleet->system= Input::get('system', null);
 		$fleet->position_updated_at = date('Y/m/d h:i:s', time());
 		$fleet->previous_x = null;
 		$fleet->previous_y = null;
@@ -159,6 +160,7 @@ class FleetsController extends BaseController {
 		$fleet->x = Input::get('x');
 		$fleet->y = Input::get('y');
 		$fleet->z = Input::get('z');
+		$fleet->system = Input::get('system' );
 		$fleet->position_updated_at = date('Y/m/d h:i:s', time());
 		$fleet->speed = Input::get('speed');
 		$fleet->speed_knowledge = Input::get('speed_knowledge');

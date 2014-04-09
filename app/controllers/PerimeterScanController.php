@@ -13,6 +13,10 @@ class PerimeterScanController extends BaseController {
 
 		$htmlPage = urldecode(Input::get('perimeterScanHtmlPage'));
 
+		$scannerPosition = urldecode(Input::get('scannerPosition'));
+		$system = urldecode(Input::get('system'));
+
+
 		//Parse the input
 
 		$html = HtmlDomParser::str_get_html("$htmlPage");
@@ -120,6 +124,7 @@ class PerimeterScanController extends BaseController {
 				$fleet->x = (int) $position[0];
 				$fleet->y = (int) $position[1];
 				$fleet->z = (int) $temp[1];
+				$fleet->system = null;
 			}
 			else {
 				//TODO Handle fleets in systems correctly
@@ -127,9 +132,12 @@ class PerimeterScanController extends BaseController {
 					return Response::make("Failed to parse scan 14.");
 				}
 
-				return Response::make("Fleet not in open Space. Scan not parsed");
+				$position = explode(",",$scannerPosition);
+				$fleet->x = (int) $position[0];
+				$fleet->y = (int) $position[1];
+				$fleet->z = (int) $position[2];
+				$fleet->system = $system ;
 
-				$fleet->notes = "Inside System. Position= " + $td->innertext + " .";
 			}
 
 
@@ -174,6 +182,7 @@ class PerimeterScanController extends BaseController {
 			$oldFleet->vector_x = (($oldFleet->x - $oldFleet->previous_x)*4000) / ($oldFleet->speed * 3.6);	//Each coord 4000km, speed from m/s - > km/h
 			$oldFleet->vector_y = (($oldFleet->y - $oldFleet->previous_y)*4000) / ($oldFleet->speed * 3.6);
 			$oldFleet->vector_z = (($oldFleet->z - $oldFleet->previous_z)*4000) / ($oldFleet->speed * 3.6);
+			$oldFleet->system = $newFleet->system;
 		//	$oldFleet->speed = $newFleet->speed;
 		//	$oldFleet->speed_knowledge = $newFleet->speed_knowledge;
 		//	$oldFleet->destination = $newFleet->destination;

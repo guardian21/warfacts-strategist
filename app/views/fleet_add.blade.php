@@ -34,8 +34,6 @@
 		<div class="form-group">
 			<label for="ships">Ships</label>
 			<input type="number" class="form-control" name="ships" />
-		</div>
-		<div class="form-group">
 			<label for="tonnage">Tonnage</label>
 			<input type="number" class="form-control" name="tonnage" />
 		</div>
@@ -46,20 +44,17 @@
 		<div class="form-group">
 			<label for="x">X</label>
 			<input type="number" class="form-control" name="x" />
-		</div>
-		<div class="form-group">
 			<label for="y">Y</label>
 			<input type="number" class="form-control" name="y" />
-		</div>
-		<div class="form-group">
 			<label for="z">Z</label>
 			<input type="number" class="form-control" name="z" />
+			<label for="system">Inside System</label>
+			<input type="text" class="form-control" name="system" />			
 		</div>
+
 		<div class="form-group">
 			<label for="speed">Speed (m/s)</label>
 			<input type="number" class="form-control" name="speed" />
-		</div>
-		<div class="form-group">
 			<label for="speed_knowledge">Speed Knowledge</label>
 			<select name="speed_knowledge">
 				<option value="exact">Exact</option> 

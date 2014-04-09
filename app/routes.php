@@ -110,8 +110,8 @@ Route::group(array('prefix' => 'fleets', 'before' => 'auth'), function() {
 // Perimeter Scan Handling
 
 
-Route::get('/ScanHtml', 'PerimeterScanController@getPerimeterScanHtml');
-Route::post('/ScanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
+Route::get('/perimeterScanHtml', 'PerimeterScanController@getPerimeterScanHtml');
+Route::post('/perimeterScanHtml', 'PerimeterScanController@parsePerimeterScanHtml');
 
 Route::get('/sensorScanHtml', 'SensorScanController@getSensorScanHtml');
 Route::post('/sensorScanHtml', 'SensorScanController@parseSensorScanHtml');
