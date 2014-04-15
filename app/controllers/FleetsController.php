@@ -88,18 +88,16 @@ class FleetsController extends BaseController {
 				$query->where('position_updated_at', '>' , $oldest_scan);
 			}
 
-
-
-			if (!$showFriend){
+			if (!$showFriend || Auth::user()->level < 2){
 				$query->where('relationship', '<>', 'friend');
 			}
-			if (!$showNeutral){
+			if (!$showNeutral || Auth::user()->level < 2){
 				$query->where('relationship', '<>', 'neutral');
 			}
 			if (!$showEnemy){
 				$query->where('relationship', '<>', 'enemy');
 			}
-			if (!$showUnknown){
+			if (!$showUnknown || Auth::user()->level < 2){
 				$query->where('relationship', '<>', 'unknown');
 			}
 
