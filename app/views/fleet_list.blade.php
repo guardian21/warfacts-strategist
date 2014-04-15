@@ -27,7 +27,7 @@
 
 
     // add parser through the tablesorter addParser method 
-    $("#fleet_table").tablesorter.addParser({ 
+/*    $("#fleet_table").tablesorter.addParser({ 
         // set a unique id 
         id: 'commaNumber', 
         is: function(s) { 
@@ -50,11 +50,12 @@
                 } 
             } 
         }); 
-    });                  
+    });    */              
 
 
 		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
 		//TODO Fix table sorter to work with comma seperated numbers
+		//TODO Sometimes sorting needs you to click calculate distance to get running again normally
 
 		function previousElementSibling( elem ) {
 
@@ -203,7 +204,7 @@
 				<th>Last Scanned</th>
 				<th>Warfacts Id</th>
 				<th>Position</th>
-				<th  class=\"{sorter: 'commaNumber'}\"> Distance from Point (km)</th>
+				<th> Distance from Point (km)</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
