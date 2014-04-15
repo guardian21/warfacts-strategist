@@ -11,13 +11,6 @@ class FleetsController extends BaseController {
 		}
 
 
-
-		$orderBy1 = Input::get('orderBy1', 'relationship');
-		$orderWay1 = Input::get('orderWay1', 'desc');
-		$orderBy2 = Input::get('orderBy2', 'ships');
-		$orderWay2 = Input::get('orderWay2', 'desc');
-
-
 		 $fleets = DB::table('fleets')->where(function($query) {
 
 
@@ -111,8 +104,6 @@ class FleetsController extends BaseController {
 			}
 
 		})
-		->orderBy($orderBy1,$orderWay1)
-		->orderBy($orderBy2,$orderWay2)
 		->get();
 
 		Input::flash();

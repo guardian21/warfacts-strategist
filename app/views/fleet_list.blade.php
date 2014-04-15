@@ -1,5 +1,100 @@
 @extends('layout')
 
+@section('head')
+
+
+
+	<script type="text/javascript" src={{ asset('/assets/js/jquery-2.1.0.min.js') }} ></script> 
+	<script type="text/javascript" src={{ asset('/assets/js/tablesorter/jquery.tablesorter.min.js') }}></script> 
+	<?php
+		function timePassed($fleet_position_updated_at)
+		{
+			$seconds = time() - strtotime($fleet_position_updated_at) ;
+		//	$temp = $seconds;
+			$days = (int) floor($seconds / 86400); // 86400 = 60 * 60 *24 = seconds in a day ;
+			$seconds = $seconds - $days * 86400 ;
+			$hours = (int) floor($seconds / 3600); // 3600 = 60 * 60 = seconds in an hour ;
+			$seconds = $seconds - $hours * 3600 ;
+			$minutes = (int) floor($seconds / 60);
+			$seconds = $seconds - $minutes * 60;
+			$answer = $days . " Days, " . $hours . " Hours, " . $minutes ." minutes and " . $seconds . " seconds ago";	
+		//	$answer = "Total seconds: " .$temp. " Which means: " . $answer ;
+			return $answer;
+		}
+	?>
+
+	<script>
+
+
+		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
+
+		function previousElementSibling( elem ) {
+
+		    do {
+
+		        elem = elem.previousSibling;
+
+		    } while ( elem && elem.nodeType !== 1 );
+
+		    return elem;
+		}
+
+		function calculateDistance()
+		{
+
+			$("#fleet_table").tablesorter(); 
+
+			function numberWithCommas(x) {
+			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+			var point = document.getElementById("point_for_distance").value ;
+			if (point != "" ){
+				point = point.replace(/[()]/g,''); // remove parenthesis
+				point_arr = point.split(',');
+				original_x = point_arr[0];
+				original_y = point_arr[1];
+				original_z = point_arr[2];
+
+				var cells = document.getElementsByClassName("calc_dist");
+				//alert (cells.length);
+				for (var i=0; i < cells.length ; i++){
+					var cell = cells[i];
+					//alert(cell.innerHTML);
+					var temp = previousElementSibling(cell).textContent;
+					temp = temp.replace(/[()]/g,''); // remove parenthesis
+					var position = temp.split(',');
+					var pos_x = position[0];
+					var pos_y = position[1];
+					var pos_z = position[2];
+			
+		 			var distance = Math.round (4000 *  Math.sqrt( Math.pow(original_x - pos_x , 2) + Math.pow(original_y - pos_y , 2) + Math.pow(original_z - pos_z , 2) ) );
+
+					//cell.innerHTML = distance;
+					cell.innerHTML = numberWithCommas(distance)  + " km";
+
+				}
+
+			}
+			$("#fleet_table").tablesorter(); 
+		}
+
+
+
+	$(document).ready(function() 
+	    { 
+	        $("#fleet_table").tablesorter(); 
+	    } 
+	); 
+
+	</script> 
+
+@stop
+
+
+
+
+
+
 @section('content')
 
 <div class="page-header">
@@ -25,7 +120,8 @@
 		<label for="unknown">Show Unknown:</label>
 		<input type="checkbox" name="unknown" value="unknown" @if (Input::old('unknown')) checked @endif >
 		<label for="point">Calculate Distance from point:</label>
-		<input type="text" name="point" value= {{ Input::old('point', null) }} >		
+		<input id="point_for_distance" type="text" name="point" value= {{ Input::old('point', null) }} >	
+		<input id="calculate_distance" type="button" value="Calculate Distance" onclick="calculateDistance();" />	
 	</div>
 	<div>
 		<label for="name">Name:</label>
@@ -37,59 +133,25 @@
 		<label for="faction">Faction:</label>
 		<input type="text" name="faction" value= {{ Input::old('faction', null) }} >
 	<div>
-			<label for="shipMin">Minimum Ships</label>
-			<input type="number"  name="shipMin" size='12' value= {{ Input::old('shipMin', null) }} >
-			<label for="shipMax">Maximum Ships</label>
-			<input type="number" name="shipMax" size='12' value= {{ Input::old('shipMax', null) }} >
+		<label for="shipMin">Minimum Ships</label>
+		<input type="number"  name="shipMin" size='12' value= {{ Input::old('shipMin', null) }} >
+		<label for="shipMax">Maximum Ships</label>
+		<input type="number" name="shipMax" size='12' value= {{ Input::old('shipMax', null) }} >
 	</div>
 	<div>
-			<label for="tonMin">Minimum Tonnage</label>
-			<input type="number"  name="tonMin" size='12' value= {{ Input::old('tonMin', null) }} >
-			<label for="tonMax">Maximum Tonnage</label>
-			<input type="number"  name="tonMax" size='12' value= {{ Input::old('tonMax', null) }} >
+		<label for="tonMin">Minimum Tonnage</label>
+		<input type="number"  name="tonMin" size='12' value= {{ Input::old('tonMin', null) }} >
+		<label for="tonMax">Maximum Tonnage</label>
+		<input type="number"  name="tonMax" size='12' value= {{ Input::old('tonMax', null) }} >
 	</div>
 	<div>
-			<label for="time_limit">Last Scan not older than </label>
-			<input type="number"  name="time_limit" size='12' value= {{ Input::old('time_limit', null) }} >
-			<select name="time_limit_type">
+		<label for="time_limit">Last Scan not older than </label>
+		<input type="number"  name="time_limit" size='12' value= {{ Input::old('time_limit', null) }} >
+		<select name="time_limit_type">
 			<option value="days"  @if (Input::old('time_limit_type') == "days" ) selected @endif > Days</option> 
 			<option value="hours"  @if (Input::old('time_limit_type') == "hours" ) selected @endif > Hours</option> 
 			<option value="minutes"  @if (Input::old('time_limit_type') == "minutes" ) selected @endif > Minutes</option> 
-			</select>		
-
-	</div>
-
-
-	<div>
-		Order by:
-		<select name="orderBy1">
-			<option value="owner"  @if (Input::old('orderBy1') == "owner" ) selected @endif > Owner</option> 
-			<option value="empire"  @if (Input::old('orderBy1') == "empire" ) selected @endif >Empire</option>
-			<option value="faction"  @if (Input::old('orderBy1') == "faction" ) selected @endif >Faction</option>
-			<option value="relationship"   @if (Input::old('orderBy1') == "relationship" ) selected @endif >Relationship</option>			
-			<option value="ships"   @if (Input::old('orderBy1') == "ships" ) selected @endif >Ships</option>			
-			<option value="tonnage"  @if (Input::old('orderBy1') == "tonnage" ) selected @endif >Tonnage</option>			
-			<option value="position_updated_at"  @if (Input::old('orderBy1') == "position_updated_at" ) selected @endif >Last Scanned</option>			
-		</select>
-		<select name="orderWay1">
-			<option value="asc" @if (Input::old('orderWay1') == "asc" ) selected @endif>Ascending</option> 
-			<option value="desc" @if (Input::old('orderWay1') == "desc" ) selected @endif>Descending</option>
-		</select>
-		and then By:
-		<select name="orderBy2">
-			<option value="owner"  @if (Input::old('orderBy2') == "owner" ) selected @endif > Owner</option> 
-			<option value="empire"  @if (Input::old('orderBy2') == "empire" ) selected @endif >Empire</option>
-			<option value="faction"  @if (Input::old('orderBy2') == "faction" ) selected @endif >Faction</option>
-			<option value="relationship"   @if (Input::old('orderBy2') == "relationship" ) selected @endif >Relationship</option>			
-			<option value="ships"   @if (Input::old('orderBy2') == "ships" ) selected @endif >Ships</option>			
-			<option value="tonnage"  @if (Input::old('orderBy2') == "tonnage" ) selected @endif >Tonnage</option>	
-			<option value="position_updated_at"  @if (Input::old('orderBy2') == "position_updated_at" ) selected @endif >Last Scanned</option>			
-		
-		</select>
-		<select name="orderWay2">
-			<option value="asc" @if (Input::old('orderWay2') == "asc" ) selected @endif>Ascending</option> 
-			<option value="desc" @if (Input::old('orderWay2') == "desc" ) selected @endif>Descending</option>
-		</select>
+		</select>		
 
 		<input type="submit" value="Refresh" class="btn btn-primary" />
 		<a href="{{ action('FleetsController@show') }}" class="btn-danger">Cancel</a>
@@ -101,7 +163,7 @@
 @if (empty($fleets))
 	<p>No fleets matching those criteria(</p>
 @else
-	<table class="table table-striped">
+	<table id="fleet_table" class="table table-striped tablesorter">
 		<thead>
 			<tr>
 				<th>Name</th>
@@ -142,7 +204,7 @@
 					<td>{{ $fleet->warfacts_id }}</td>
 					<td><a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} target="_blank" >
 						({{ $fleet->x }},{{ $fleet->y }},{{ $fleet->z }})</td>
-					<td>Coming Soon</td>
+					<td class = "calc_dist" ></td>
 					<td>{{ $fleet->speed }}</td>
 					<td>{{ $fleet->speed_knowledge }}</td>
 					<td>{{ $fleet->vector_x }}</td>
@@ -161,22 +223,8 @@
 		</tbody>
 	</table>
 @endif
+
+
+
+
 @stop
-
-
-<?php
-	function timePassed($fleet_position_updated_at)
-	{
-		$seconds = time() - strtotime($fleet_position_updated_at) ;
-	//	$temp = $seconds;
-		$days = (int) floor($seconds / 86400); // 86400 = 60 * 60 *24 = seconds in a day ;
-		$seconds = $seconds - $days * 86400 ;
-		$hours = (int) floor($seconds / 3600); // 3600 = 60 * 60 = seconds in an hour ;
-		$seconds = $seconds - $hours * 3600 ;
-		$minutes = (int) floor($seconds / 60);
-		$seconds = $seconds - $minutes * 60;
-		$answer = $days . " Days, " . $hours . " Hours, " . $minutes ." minutes and " . $seconds . " seconds ago";	
-	//	$answer = "Total seconds: " .$temp. " Which means: " . $answer ;
-		return $answer;
-	}
-?>
