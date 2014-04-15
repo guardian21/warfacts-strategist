@@ -25,6 +25,16 @@
 
 	<script>
 
+		jQuery.tablesorter.addParser({
+		  id: "fancyNumber",
+		  is: function(s) {
+		    return /^[0-9]?[0-9,\.]*$/.test(s);
+		  },
+		  format: function(s) {
+		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
+		  },
+		  type: "numeric"
+		});
 
 		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
 
