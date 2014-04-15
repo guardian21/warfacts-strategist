@@ -158,6 +158,7 @@ class PerimeterScanController extends BaseController {
 		//	$oldFleet->speed = $newFleet->speed;
 		//	$oldFleet->speed_knowledge = $newFleet->speed_knowledge;
 
+			$newFleet->position_updated_at = date('Y/m/d h:i:s', time());
 			$newFleet->speed = -1;
 			$newFleet->speed_knowledge = 'uknown';
 			$newFleet->save();
