@@ -25,17 +25,33 @@
 
 	<script>
 
-		jQuery.tablesorter.addParser({
-		  id: "commaDigit",
-		  is: function(s, table) {
-		    var c = table.config;
-		    return jQuery.tablesorter.isDigit(s.replace(/,/g, ""), c);
-		  },
-		  format: function(s) {
-		    return jQuery.tablesorter.formatFloat(s.replace(/,/g, ""));
-		  },
-		  type: "numeric"
-		});
+
+    // add parser through the tablesorter addParser method 
+    $("#fleet_table").tablesorter.addParser({ 
+        // set a unique id 
+        id: 'commaNumber', 
+        is: function(s) { 
+            // return false so this parser is not auto detected 
+            return false; 
+        }, 
+        format: function(s) { 
+            // format your data for normalization 
+            return s.replace(/,/g, ""); 
+        }, 
+        // set type, either numeric or text 
+        type: 'numeric' 
+    }); 
+     
+    $(function() { 
+        $("#fleet_table").tablesorter({ 
+            headers: { 
+                10: { 
+                    sorter:'commaNumber' 
+                } 
+            } 
+        }); 
+    });                  
+
 
 		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
 		//TODO Fix table sorter to work with comma seperated numbers
@@ -54,7 +70,6 @@
 		function calculateDistance()
 		{
 
-			$("#fleet_table").tablesorter(); 
 
 			function numberWithCommas(x) {
 			    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -81,8 +96,8 @@
 			
 		 			var distance = Math.round (4000 *  Math.sqrt( Math.pow(original_x - pos_x , 2) + Math.pow(original_y - pos_y , 2) + Math.pow(original_z - pos_z , 2) ) );
 
-					//cell.innerHTML = distance ;
-					cell.innerHTML = numberWithCommas(distance) ;
+					cell.innerHTML = distance ;
+					//cell.innerHTML = numberWithCommas(distance) ;
 
 				}
 
@@ -188,7 +203,7 @@
 				<th>Last Scanned</th>
 				<th>Warfacts Id</th>
 				<th>Position</th>
-				<th  class=\"{sorter: 'commaDigit'}\"> Distance from Point (km)</th>
+				<th  class=\"{sorter: 'commaNumber'}\"> Distance from Point (km)</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
