@@ -181,6 +181,7 @@ class PerimeterScanController extends BaseController {
 			$oldFleet->x = $newFleet->x;
 			$oldFleet->y = $newFleet->y;
 			$oldFleet->z = $newFleet->z;
+			$time = new DateTime();
 			$oldFleet->position_updated_at = $time->format('Y-m-d H:i:s');
 			$oldFleet->vector_x = (($oldFleet->x - $oldFleet->previous_x)*4000) / ($oldFleet->speed * 3.6);	//Each coord 4000km, speed from m/s - > km/h
 			$oldFleet->vector_y = (($oldFleet->y - $oldFleet->previous_y)*4000) / ($oldFleet->speed * 3.6);
