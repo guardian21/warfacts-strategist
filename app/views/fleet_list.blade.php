@@ -25,18 +25,22 @@
 
 	<script>
 
-		jQuery.tablesorter.addParser({
-		  id: "fancyNumber",
-		  is: function(s) {
-		    return /^[0-9]?[0-9,\.]*$/.test(s);
-		  },
-		  format: function(s) {
-		    return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
-		  },
-		  type: "numeric"
+		$( function() { 
+
+		    $.tablesorter.addParser({
+		        id: "fancyNumber",
+		        is: function(s) {
+		            return /^[0-9]?[0-9,\.]*$/.test(s);
+		        },
+		        format: function(s) {
+		            return $.tablesorter.formatFloat(s.replace(/,/g, ''));
+		        },
+		        type: "numeric"
+		    });
 		});
 
 		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
+		//TODO Fix table sorter to work with comma seperated numbers
 
 		function previousElementSibling( elem ) {
 
@@ -79,8 +83,8 @@
 			
 		 			var distance = Math.round (4000 *  Math.sqrt( Math.pow(original_x - pos_x , 2) + Math.pow(original_y - pos_y , 2) + Math.pow(original_z - pos_z , 2) ) );
 
-					//cell.innerHTML = distance;
-					cell.innerHTML = numberWithCommas(distance)  + " km";
+					//cell.innerHTML = distance ;
+					cell.innerHTML = numberWithCommas(distance) ;
 
 				}
 
@@ -186,7 +190,7 @@
 				<th>Last Scanned</th>
 				<th>Warfacts Id</th>
 				<th>Position</th>
-				<th>Distance from Point</th>
+				<th  class=\"{sorter: 'fancyNumber'}\"> Distance from Point (km)</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
