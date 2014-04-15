@@ -47,8 +47,19 @@
 			<input type="number"  name="tonMin" size='12' value= {{ Input::old('tonMin', null) }} >
 			<label for="tonMax">Maximum Tonnage</label>
 			<input type="number"  name="tonMax" size='12' value= {{ Input::old('tonMax', null) }} >
+	</div>
+	<div>
+			<label for="time_limit">Last Scan not older than </label>
+			<input type="number"  name="time_limit" size='12' value= {{ Input::old('time_limit', null) }} >
+			<select name="time_limit_type">
+			<option value="days"  @if (Input::old('time_limit_type') == "days" ) selected @endif > Days</option> 
+			<option value="hours"  @if (Input::old('time_limit_type') == "hours" ) selected @endif > Hours</option> 
+			<option value="minutes"  @if (Input::old('time_limit_type') == "minutes" ) selected @endif > Minutes</option> 
+			</select>		
 
 	</div>
+
+
 	<div>
 		Order by:
 		<select name="orderBy1">
@@ -58,6 +69,7 @@
 			<option value="relationship"   @if (Input::old('orderBy1') == "relationship" ) selected @endif >Relationship</option>			
 			<option value="ships"   @if (Input::old('orderBy1') == "ships" ) selected @endif >Ships</option>			
 			<option value="tonnage"  @if (Input::old('orderBy1') == "tonnage" ) selected @endif >Tonnage</option>			
+			<option value="position_updated_at"  @if (Input::old('orderBy1') == "position_updated_at" ) selected @endif >Last Scanned</option>			
 		</select>
 		<select name="orderWay1">
 			<option value="asc" @if (Input::old('orderWay1') == "asc" ) selected @endif>Ascending</option> 
@@ -70,7 +82,9 @@
 			<option value="faction"  @if (Input::old('orderBy2') == "faction" ) selected @endif >Faction</option>
 			<option value="relationship"   @if (Input::old('orderBy2') == "relationship" ) selected @endif >Relationship</option>			
 			<option value="ships"   @if (Input::old('orderBy2') == "ships" ) selected @endif >Ships</option>			
-			<option value="tonnage"  @if (Input::old('orderBy2') == "tonnage" ) selected @endif >Tonnage</option>			
+			<option value="tonnage"  @if (Input::old('orderBy2') == "tonnage" ) selected @endif >Tonnage</option>	
+			<option value="position_updated_at"  @if (Input::old('orderBy2') == "position_updated_at" ) selected @endif >Last Scanned</option>			
+		
 		</select>
 		<select name="orderWay2">
 			<option value="asc" @if (Input::old('orderWay2') == "asc" ) selected @endif>Ascending</option> 
@@ -97,6 +111,7 @@
 				<th>Faction</th>
 				<th>Ships</th>
 				<th>Tonnage</th>
+				<th>Last Scanned</th>
 				<th>Warfacts Id</th>
 				<th>Position</th>
 				<th>Distance from Point</th>
@@ -123,6 +138,7 @@
 					<td>{{ $fleet->faction }}</td>
 					<td>{{ $fleet->ships }}</td>
 					<td>{{ $fleet->tonnage }}</td>
+					<td> {{ timePassed($fleet->position_updated_at) }}</td>
 					<td>{{ $fleet->warfacts_id }}</td>
 					<td><a href={{ "http://www.war-facts.com/extras/view_universe.php?x=".$fleet->x."&y=".$fleet->y ."&z=".$fleet->z ;}} target="_blank" >
 						({{ $fleet->x }},{{ $fleet->y }},{{ $fleet->z }})</td>
@@ -146,3 +162,21 @@
 	</table>
 @endif
 @stop
+
+
+<?php
+	function timePassed($fleet_position_updated_at)
+	{
+		$seconds = time() - strtotime($fleet_position_updated_at) ;
+	//	$temp = $seconds;
+		$days = (int) floor($seconds / 86400); // 86400 = 60 * 60 *24 = seconds in a day ;
+		$seconds = $seconds - $days * 86400 ;
+		$hours = (int) floor($seconds / 3600); // 3600 = 60 * 60 = seconds in an hour ;
+		$seconds = $seconds - $hours * 3600 ;
+		$minutes = (int) floor($seconds / 60);
+		$seconds = $seconds - $minutes * 60;
+		$answer = $days . " Days, " . $hours . " Hours, " . $minutes ." minutes and " . $seconds . " seconds ago";	
+	//	$answer = "Total seconds: " .$temp. " Which means: " . $answer ;
+		return $answer;
+	}
+?>

@@ -7,7 +7,7 @@ class FleetsController extends BaseController {
 		if (Request::isMethod('GET'))
 		{
 			$fleets = Fleet::all();
-			return View::make('fleet_show', compact('fleets'));
+			return View::make('fleet_list', compact('fleets'));
 		}
 
 
@@ -33,6 +33,8 @@ class FleetsController extends BaseController {
 			$shipMax = Input::get('shipMax',null);
 			$tonMin = Input::get('tonMin',null);
 			$tonMax = Input::get('tonMax',null);
+			$time_limit = Input::get('time_limit', null);
+			$time_limit_type = Input::get('time_limit_type', null);
 
 			if($name != null){
 				$query->where('name', 'LIKE', "%$name%");
@@ -72,6 +74,26 @@ class FleetsController extends BaseController {
 			else if ($tonMin != null && $tonMax != null) {
 				$query->whereBetween('tonnage', array($tonMin,$tonMax));
 			}
+			if ($time_limit != null) {
+				switch ($time_limit_type) {
+					case 'days':
+						$time_limit = $time_limit * 86400;
+						break;
+					case 'hours':
+						$time_limit = $time_limit * 3600;
+						break;
+					case 'minutes':
+						$time_limit = $time_limit * 60;
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+
+				$oldest_scan = date('Y/m/d h:i:s', time() - $time_limit );
+				$query->where('position_updated_at', '>' , $oldest_scan);
+			}
 
 
 
@@ -94,7 +116,7 @@ class FleetsController extends BaseController {
 		->get();
 
 		Input::flash();
-		return View::make('fleet_show', compact('fleets'));
+		return View::make('fleet_list', compact('fleets'));
 	}
 
 	public function add(){
