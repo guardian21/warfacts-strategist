@@ -25,18 +25,16 @@
 
 	<script>
 
-		$( function() { 
-
-		    $.tablesorter.addParser({
-		        id: "fancyNumber",
-		        is: function(s) {
-		            return /^[0-9]?[0-9,\.]*$/.test(s);
-		        },
-		        format: function(s) {
-		            return $.tablesorter.formatFloat(s.replace(/,/g, ''));
-		        },
-		        type: "numeric"
-		    });
+		jQuery.tablesorter.addParser({
+		  id: "commaDigit",
+		  is: function(s, table) {
+		    var c = table.config;
+		    return jQuery.tablesorter.isDigit(s.replace(/,/g, ""), c);
+		  },
+		  format: function(s) {
+		    return jQuery.tablesorter.formatFloat(s.replace(/,/g, ""));
+		  },
+		  type: "numeric"
 		});
 
 		//TODO Fix the need of calculateDistance calling 2 times tablesorter, else after first click only sort is only one way (after 2 clicks it works normally)
@@ -190,7 +188,7 @@
 				<th>Last Scanned</th>
 				<th>Warfacts Id</th>
 				<th>Position</th>
-				<th  class=\"{sorter: 'fancyNumber'}\"> Distance from Point (km)</th>
+				<th  class=\"{sorter: 'commaDigit'}\"> Distance from Point (km)</th>
 				<th>Speed</th>
 				<th>Speed Knowledge</th>
 				<th>Vector X</th>
