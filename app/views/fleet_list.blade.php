@@ -14,7 +14,7 @@
 			$interval = $current->diff($previous);
 
 
-			$days    = $interval-->format('%d');
+			$days    = $interval->format('%d');
 			$hours   = $interval->format('%h');
 			$minutes = $interval->format('%i');
 			$seconds = $interval->format('%s');
