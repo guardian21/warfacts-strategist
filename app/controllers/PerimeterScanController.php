@@ -158,7 +158,9 @@ class PerimeterScanController extends BaseController {
 		//	$oldFleet->speed = $newFleet->speed;
 		//	$oldFleet->speed_knowledge = $newFleet->speed_knowledge;
 
-			$newFleet->position_updated_at = date('Y/m/d h:i:s', time());
+
+			$time = new DateTime();
+			$newFleet->position_updated_at = $time->format('Y-m-d H:i:s');
 			$newFleet->speed = -1;
 			$newFleet->speed_knowledge = 'uknown';
 			$newFleet->save();
@@ -179,7 +181,7 @@ class PerimeterScanController extends BaseController {
 			$oldFleet->x = $newFleet->x;
 			$oldFleet->y = $newFleet->y;
 			$oldFleet->z = $newFleet->z;
-			$oldFleet->position_updated_at = date('Y/m/d h:i:s', time());
+			$oldFleet->position_updated_at = $time->format('Y-m-d H:i:s');
 			$oldFleet->vector_x = (($oldFleet->x - $oldFleet->previous_x)*4000) / ($oldFleet->speed * 3.6);	//Each coord 4000km, speed from m/s - > km/h
 			$oldFleet->vector_y = (($oldFleet->y - $oldFleet->previous_y)*4000) / ($oldFleet->speed * 3.6);
 			$oldFleet->vector_z = (($oldFleet->z - $oldFleet->previous_z)*4000) / ($oldFleet->speed * 3.6);

@@ -9,14 +9,16 @@
 	<?php
 		function timePassed($fleet_position_updated_at)
 		{
-			$seconds = time() - strtotime($fleet_position_updated_at) ;
-		//	$temp = $seconds;
-			$days = (int) floor($seconds / 86400); // 86400 = 60 * 60 *24 = seconds in a day ;
-			$seconds = $seconds - $days * 86400 ;
-			$hours = (int) floor($seconds / 3600); // 3600 = 60 * 60 = seconds in an hour ;
-			$seconds = $seconds - $hours * 3600 ;
-			$minutes = (int) floor($seconds / 60);
-			$seconds = $seconds - $minutes * 60;
+			$previous = new DateTime($fleet_position_updated_at);
+			$current = new DateTime();
+			$interval = $current->diff($previous);
+
+
+			$days    = $interval-->format('%d');
+			$hours   = $interval->format('%h');
+			$minutes = $interval->format('%i');
+			$seconds = $interval->format('%s');
+
 			$answer = $days . " Days, " . $hours . " Hours, " . $minutes ." minutes and " . $seconds . " seconds ago";	
 		//	$answer = "Total seconds: " .$temp. " Which means: " . $answer ;
 			return $answer;
